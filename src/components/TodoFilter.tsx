@@ -1,8 +1,6 @@
 import type { Filter } from 'actions';
 import { setTodoFilter } from 'actions';
-import { useEffect, useState } from 'react';
-import type { RootState } from 'reducers';
-import store from 'store';
+import { useTypedDispatch, useTypedSelector } from 'store';
 
 const filters: Record<string, Filter> = {
   All: 'SHOW_ALL',
@@ -11,18 +9,11 @@ const filters: Record<string, Filter> = {
 };
 
 const TodoFilter = () => {
-  const [filter, setFilter] = useState<RootState['filter']>('SHOW_ALL');
-
-  useEffect(() => {
-    const unsubscribe = store.subscribe(() => {
-      const { filter } = store.getState();
-      setFilter(filter);
-    });
-    return unsubscribe;
-  }, []);
+  const dispatch = useTypedDispatch();
+  const filter = useTypedSelector((state) => state.filter);
 
   const handleFilterTodo = (filter: Filter) => () => {
-    store.dispatch(setTodoFilter({ filter }));
+    dispatch(setTodoFilter({ filter }));
   };
 
   return (

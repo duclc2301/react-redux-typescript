@@ -1,9 +1,9 @@
 import { toggleTodo } from 'actions';
 import { Filters } from 'actions/constants';
 import type { FunctionComponent } from 'react';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import type { RootState } from 'reducers';
-import store from 'store';
+import { useTypedDispatch, useTypedSelector } from 'store';
 import Todo from './Todo';
 
 type Todos = RootState['todos'];
@@ -23,22 +23,15 @@ const getTodos = (todos: Todos, filter: Filter) => {
 };
 
 const TodoList: FunctionComponent<{}> = () => {
-  const [todos, setTodos] = useState<Todos>([]);
-  const [filter, setFilter] = useState<Filter>(Filters.SHOW_ALL);
+  const dispatch = useTypedDispatch();
 
-  useEffect(() => {
-    const unsubscribe = store.subscribe(() => {
-      const { todos, filter } = store.getState();
-      setTodos(todos);
-      setFilter(filter);
-    });
-    return unsubscribe;
-  }, []);
+  const todos = useTypedSelector((state) => state.todos);
+  const filter = useTypedSelector((state) => state.filter);
 
   const filteredTodos = useMemo(() => getTodos(todos, filter), [todos, filter]);
 
   const handleOnToggle = (id: string) => () => {
-    store.dispatch(toggleTodo({ id }));
+    dispatch(toggleTodo({ id }));
   };
 
   return (
