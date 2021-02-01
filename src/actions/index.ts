@@ -1,36 +1,21 @@
-import { ADD_TODO, TOGGLE_TODO, SET_FILTER, Filters } from './constants';
+import { createAction, nanoid } from '@reduxjs/toolkit';
+import { ADD_TODO, Filters, SET_FILTER, TOGGLE_TODO } from './constants';
 
 export type Filter = keyof typeof Filters;
 
-export type AddTodoAction = {
-  type: typeof ADD_TODO;
-  id: string;
-  task: string;
-};
+const addTodo = createAction(ADD_TODO, (payload: { task: string }) => {
+  const { task } = payload;
+  return { payload: { id: nanoid(), task } };
+});
 
-export type ToggleTodoAction = {
-  type: typeof TOGGLE_TODO;
-  id: string;
-};
-
-export type TodoFilterAction = {
-  type: typeof SET_FILTER;
-  filter: Filter;
-};
-
-const addTodo = (payload: { id: string; task: string }): AddTodoAction => {
-  const { id, task } = payload;
-  return { type: ADD_TODO, id, task };
-};
-
-const toggleTodo = (payload: { id: string }): ToggleTodoAction => {
+const toggleTodo = createAction(TOGGLE_TODO, (payload: { id: string }) => {
   const { id } = payload;
-  return { type: TOGGLE_TODO, id };
-};
+  return { payload: { id } };
+});
 
-const setTodoFilter = (payload: { filter: Filter }): TodoFilterAction => {
+const setFilter = createAction(SET_FILTER, (payload: { filter: Filter }) => {
   const { filter } = payload;
-  return { type: SET_FILTER, filter };
-};
+  return { payload: { filter } };
+});
 
-export { addTodo, toggleTodo, setTodoFilter };
+export { addTodo, toggleTodo, setFilter };

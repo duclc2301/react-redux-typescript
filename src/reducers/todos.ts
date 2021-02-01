@@ -1,22 +1,31 @@
-import type { AddTodoAction, ToggleTodoAction } from 'actions';
-import { ADD_TODO, TOGGLE_TODO } from 'actions/constants';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { createReducer } from '@reduxjs/toolkit';
+import { addTodo, toggleTodo } from 'actions';
 
 type State = Todo[];
-type Action = AddTodoAction | ToggleTodoAction;
 
 const initialState: State = [];
 
-const todosReducer = (state: State = initialState, action: Action) => {
-  switch (action.type) {
-    case ADD_TODO:
-      return [...state, { ...action, completed: false }];
-    case TOGGLE_TODO:
-      return state.map((todo) =>
-        todo.id === action.id ? { ...todo, completed: !todo.completed } : todo
-      );
-    default:
-      return state;
-  }
+type AddTodoAction = {
+  id: string;
+  task: string;
 };
+
+type ToggleTodoAction = {
+  id: string;
+};
+
+const todosReducer = createReducer(initialState, {
+  [addTodo.type]: (state, action: PayloadAction<AddTodoAction>) => {
+    const { id, task } = action.payload;
+    const todo = { id, task, completed: false };
+    state.push(todo);
+  },
+  [toggleTodo.type]: (state, action: PayloadAction<ToggleTodoAction>) => {
+    const { id } = action.payload;
+    const todo = state.find((todo) => todo.id === id);
+    if (todo) todo.completed = !todo.completed;
+  },
+});
 
 export default todosReducer;

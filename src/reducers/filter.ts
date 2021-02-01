@@ -1,18 +1,21 @@
-import type { TodoFilterAction } from 'actions';
-import { Filters, SET_FILTER } from 'actions/constants';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { createReducer } from '@reduxjs/toolkit';
+import type { Filter } from 'actions';
+import { setFilter } from 'actions';
+import { Filters } from 'actions/constants';
 
 type State = typeof Filters.SHOW_ALL;
-type Action = TodoFilterAction;
 
 const initialState: State = Filters.SHOW_ALL;
 
-const filterReducer = (state: State = initialState, action: Action) => {
-  switch (action.type) {
-    case SET_FILTER:
-      return action.filter;
-    default:
-      return state;
-  }
-};
+type FilterAction = { filter: Filter };
+
+const filterReducer = createReducer(initialState, {
+  [setFilter.type]: (state, action: PayloadAction<FilterAction>) => {
+    const { filter } = action.payload;
+    state = filter;
+    return state;
+  },
+});
 
 export default filterReducer;

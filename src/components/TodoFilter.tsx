@@ -1,5 +1,5 @@
 import type { Filter } from 'actions';
-import { setTodoFilter } from 'actions';
+import { setFilter } from 'actions';
 import { useTypedDispatch, useTypedSelector } from 'store';
 
 const filters: Record<string, Filter> = {
@@ -13,7 +13,8 @@ const TodoFilter = () => {
   const filter = useTypedSelector((state) => state.filter);
 
   const handleFilterTodo = (filter: Filter) => () => {
-    dispatch(setTodoFilter({ filter }));
+    console.log(filter);
+    dispatch(setFilter({ filter }));
   };
 
   return (

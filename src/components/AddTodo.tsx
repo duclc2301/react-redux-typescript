@@ -2,14 +2,13 @@ import { addTodo } from 'actions';
 import type { ChangeEvent, FormEvent, FunctionComponent } from 'react';
 import { useState } from 'react';
 import { useTypedDispatch } from 'store';
-import randomId from 'utils/randomId';
 
 const AddTodo: FunctionComponent<{}> = () => {
   const dispatch = useTypedDispatch();
   const [value, setValue] = useState<string>('');
 
   const handleAddTodo = (task: string) => {
-    dispatch(addTodo({ id: randomId(), task }));
+    dispatch(addTodo({ task }));
   };
 
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
