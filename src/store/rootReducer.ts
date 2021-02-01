@@ -1,6 +1,6 @@
-import { combineReducers } from 'redux';
-import filterReducer from './filter';
-import todosReducer from './todos';
+import { combineReducers } from '@reduxjs/toolkit';
+import filterReducer from 'slices/filter';
+import todosReducer from 'slices/todos';
 
 const rootReducer = combineReducers({
   todos: todosReducer,

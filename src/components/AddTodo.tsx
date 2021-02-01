@@ -1,6 +1,6 @@
-import { addTodo } from 'actions';
 import type { ChangeEvent, FormEvent, FunctionComponent } from 'react';
 import { useState } from 'react';
+import { addTodo } from 'slices/todos';
 import { useTypedDispatch } from 'store';
 
 const AddTodo: FunctionComponent<{}> = () => {

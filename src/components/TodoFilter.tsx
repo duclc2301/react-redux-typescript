@@ -1,5 +1,5 @@
-import type { Filter } from 'actions';
-import { setFilter } from 'actions';
+import type { Filter } from 'slices/filter';
+import { setFilter } from 'slices/filter';
 import { useTypedDispatch, useTypedSelector } from 'store';
 
 const filters: Record<string, Filter> = {

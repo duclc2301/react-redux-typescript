@@ -1,8 +1,8 @@
-import { toggleTodo } from 'actions';
-import { Filters } from 'actions/constants';
 import type { FunctionComponent } from 'react';
 import { useMemo } from 'react';
-import type { RootState } from 'reducers';
+import type { RootState } from 'store/rootReducer';
+import { Filters } from 'slices/filter';
+import { toggleTodo } from 'slices/todos';
 import { useTypedDispatch, useTypedSelector } from 'store';
 import Todo from './Todo';
 

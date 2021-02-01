@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { createSelectorHook, useDispatch } from 'react-redux';
-import type { RootState } from 'reducers';
-import rootReducer from 'reducers';
 import type { Middleware } from 'redux';
 import logger from 'redux-logger';
+import rootReducer from 'store/rootReducer';
+import type { RootState } from './rootReducer';
 
 const middlewares: Middleware[] = [];
 
